@@ -5,20 +5,20 @@
   
 
   
-  <title>我的博客今天上线啦 | WEB安全博客爱好者-掌舵者</title>
+  <title>linux命令导出数据库 | WEB安全博客爱好者-掌舵者</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天我的博客上线了，使用的新的环境搭建，这个很简洁。 希望之后可以坚持更新文章吧！ 第一篇文章先写到这里吧！ 2018年9月3日10:52:19 调试完成时间：2018年9月3日13:42:42">
-<meta name="keywords" content="web安全博客">
+  <meta name="description" content="今天需要命令备份一个网站的数据库，下面记录一下命令： 1.打开到网站根目录 2.导出数据库 mysqldump -uroot -proot mt_suixin_com &amp;gt; mt_suixin_com.sql -uroot：数据库用户名 -proot：数据可密码 mt_suixin_com：数据库名称 大于号：导出（导出到当前目录） mt_suixin_com.sql：导出是数据库名称 以上操">
+<meta name="keywords" content="linux命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的博客今天上线啦">
-<meta property="og:url" content="http://yoursite.com/2018/09/03/我的博客今天上线啦/index.html">
+<meta property="og:title" content="linux命令导出数据库">
+<meta property="og:url" content="http://yoursite.com/2018/09/05/linux命令导出数据库/index.html">
 <meta property="og:site_name" content="WEB安全博客爱好者-掌舵者">
-<meta property="og:description" content="今天我的博客上线了，使用的新的环境搭建，这个很简洁。 希望之后可以坚持更新文章吧！ 第一篇文章先写到这里吧！ 2018年9月3日10:52:19 调试完成时间：2018年9月3日13:42:42">
+<meta property="og:description" content="今天需要命令备份一个网站的数据库，下面记录一下命令： 1.打开到网站根目录 2.导出数据库 mysqldump -uroot -proot mt_suixin_com &amp;gt; mt_suixin_com.sql -uroot：数据库用户名 -proot：数据可密码 mt_suixin_com：数据库名称 大于号：导出（导出到当前目录） mt_suixin_com.sql：导出是数据库名称 以上操">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-03T05:42:44.430Z">
+<meta property="og:updated_time" content="2018-09-05T06:48:45.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的博客今天上线啦">
-<meta name="twitter:description" content="今天我的博客上线了，使用的新的环境搭建，这个很简洁。 希望之后可以坚持更新文章吧！ 第一篇文章先写到这里吧！ 2018年9月3日10:52:19 调试完成时间：2018年9月3日13:42:42">
+<meta name="twitter:title" content="linux命令导出数据库">
+<meta name="twitter:description" content="今天需要命令备份一个网站的数据库，下面记录一下命令： 1.打开到网站根目录 2.导出数据库 mysqldump -uroot -proot mt_suixin_com &amp;gt; mt_suixin_com.sql -uroot：数据库用户名 -proot：数据可密码 mt_suixin_com：数据库名称 大于号：导出（导出到当前目录） mt_suixin_com.sql：导出是数据库名称 以上操">
   
     <link rel="alternate" href="/atom.xml" title="WEB安全博客爱好者-掌舵者" type="application/atom+xml">
   
@@ -69,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-我的博客今天上线啦" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-linux命令导出数据库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/09/03/我的博客今天上线啦/" class="article-date">
-  <time datetime="2018-09-03T02:43:40.000Z" itemprop="datePublished">2018-09-03</time>
+    <a href="/2018/09/05/linux命令导出数据库/" class="article-date">
+  <time datetime="2018-09-05T06:12:53.000Z" itemprop="datePublished">2018-09-05</time>
 </a>
     
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      我的博客今天上线啦
+      linux命令导出数据库
     </h1>
   
 
@@ -91,37 +91,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天我的博客上线了，使用的新的环境搭建，这个很简洁。</p>
-<p>希望之后可以坚持更新文章吧！</p>
-<p>第一篇文章先写到这里吧！</p>
-<p>2018年9月3日10:52:19</p>
-<p>调试完成时间：2018年9月3日13:42:42</p>
+        <p>今天需要命令备份一个网站的数据库，下面记录一下命令：</p>
+<p>1.打开到网站根目录</p>
+<p>2.导出数据库</p>
+<p><code>mysqldump -uroot -proot mt_suixin_com &gt; mt_suixin_com.sql</code></p>
+<p>-uroot：数据库用户名</p>
+<p>-proot：数据可密码</p>
+<p>mt_suixin_com：数据库名称</p>
+<p>大于号：导出（导出到当前目录）</p>
+<p>mt_suixin_com.sql：导出是数据库名称</p>
+<p>以上操作完成之后数据库导出成功。</p>
+<p>我们可以使用 <code>ls -lrt</code> 命令以列表形式列出来，方面查看。</p>
+<p><code>history</code> ：查看历史命令</p>
+<p>3.导出完成之后查编辑数据库文件，查看是否有结束标志。如：</p>
+<p><code>/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;</code></p>
+<p><code>/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;</code><br><code>/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;</code><br><code>/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;</code><br><code>/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;</code><br><code>/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;</code><br><code>/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</code><br><code>/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;</code></p>
+<p><code>-- Dump completed on 2018-09-05  9:48:08</code></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/03/我的博客今天上线啦/" data-id="cjlorme7a0001f8dowijiwzhi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/05/linux命令导出数据库/" data-id="cjlos75s400007wdo1l86r7s7" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux命令/">linux命令</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2018/09/04/记录今天的操作/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          记录今天的操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/09/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/09/04/记录今天的操作/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">记录今天的操作</div>
     </a>
   
 </nav>

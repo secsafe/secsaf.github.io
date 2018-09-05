@@ -70,6 +70,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-linux命令导出数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/05/linux命令导出数据库/" class="article-date">
+  <time datetime="2018-09-05T06:12:53.000Z" itemprop="datePublished">2018-09-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/05/linux命令导出数据库/">linux命令导出数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天需要命令备份一个网站的数据库，下面记录一下命令：</p>
+<p>1.打开到网站根目录</p>
+<p>2.导出数据库</p>
+<p><code>mysqldump -uroot -proot mt_suixin_com &gt; mt_suixin_com.sql</code></p>
+<p>-uroot：数据库用户名</p>
+<p>-proot：数据可密码</p>
+<p>mt_suixin_com：数据库名称</p>
+<p>大于号：导出（导出到当前目录）</p>
+<p>mt_suixin_com.sql：导出是数据库名称</p>
+<p>以上操作完成之后数据库导出成功。</p>
+<p>我们可以使用 <code>ls -lrt</code> 命令以列表形式列出来，方面查看。</p>
+<p><code>history</code> ：查看历史命令</p>
+<p>3.导出完成之后查编辑数据库文件，查看是否有结束标志。如：</p>
+<p><code>/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;</code></p>
+<p><code>/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;</code><br><code>/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;</code><br><code>/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;</code><br><code>/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;</code><br><code>/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;</code><br><code>/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</code><br><code>/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;</code></p>
+<p><code>-- Dump completed on 2018-09-05  9:48:08</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/05/linux命令导出数据库/" data-id="cjlos75s400007wdo1l86r7s7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux命令/">linux命令</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-记录今天的操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/09/04/记录今天的操作/" class="article-date">
@@ -84,7 +138,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/04/记录今天的操作/">记录今天的操作*</a>
+      <a class="article-title" href="/2018/09/04/记录今天的操作/">记录今天的操作</a>
     </h1>
   
 
@@ -201,9 +255,23 @@
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux命令/">linux命令</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/linux命令/" style="font-size: 10px;">linux命令</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -222,7 +290,11 @@
       <ul>
         
           <li>
-            <a href="/2018/09/04/记录今天的操作/">记录今天的操作*</a>
+            <a href="/2018/09/05/linux命令导出数据库/">linux命令导出数据库</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/04/记录今天的操作/">记录今天的操作</a>
           </li>
         
           <li>
