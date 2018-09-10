@@ -325,51 +325,20 @@
       
         
           
-            <p>webshell后门我相信大家都见过，站长也都清理过木马。今天分享一个快速查找的办法：</p>
-<p>木马里面常用的php函数：</p>
-<p><code>set_time_limit</code>（禁止报错）</p>
-<p>定义和用法</p>
-<p><code>error_reporting()</code> 函数跪地你给应该报告何种 PHP 错误。</p>
-<p><code>error_reporting()</code> 函数能够在运行时设置 <code>error_reporting</code> 指令。</p>
-<p>PHP 有诸多错误级别，使用该函数可以设置在脚本运行时的级别。如果没有设置可选参数 level，error_reporting()  仅会返回当前的错误报告级别。</p>
-<p>实例：</p>
-<p><code>&lt;?php</code></p>
-<p><code>// 关闭错误报告</code></p>
-<p><code>error_reporting(0);</code></p>
-<p><code>// 报告 runtime 错误</code></p>
-<p><code>error_reporting(E_ERROR | E_WARNING | E_PARSE);</code></p>
-<p><code>// 报告所有错误</code></p>
-<p><code>error_reporting(E_ALL);</code></p>
-<p><code>// 等同 error_reporting(E_ALL);</code></p>
-<p><code>ini_set(&quot;error_reporting&quot;, E_ALL);</code></p>
-<p><code>// 报告 E_NOTICE 之外的所有错误</code></p>
-<p><code>error_reporting(E_ALL &amp; ~E_NOTICE);</code></p>
-<p><code>?&gt;</code></p>
-<p><code>error_reporting</code>（永不过期）</p>
-<p><code>bool set_time_limit ( int $seconds )</code></p>
-<p>设置允许脚本运行的时间，单位为秒。如果超过了此设置，脚本返回一个致命的错误。默认值为30秒，或者是在php.ini的max_execution_time被定义的值，如果此值存在。</p>
-<p>当此函数被调用时，set_time_limit()会从零开始重新启动超时计数器。换句话说，如果超时默认是30秒，在脚本运行了了25秒时调用  set_time_limit(20)，那么，脚本在超时之前可运行总时间为45秒。</p>
-<p>参数</p>
-<p>seconds</p>
-<p>最大的执行时间，单位为秒。如果设置为0(零)，没有时间方面的限制。</p>
-<p>返回值</p>
-<p>成功时返回 TRUE，失败时返回 FALSE 。</p>
-<p>查找语句：</p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;set_time_limit&#39;</code></p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;error_reporting&#39;</code></p>
-<p><code>password=&#39;heiyan&#39;</code> 木马的密码为heiyan</p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;heiyan&#39;</code>查找文件中包含heiyan的文件</p>
-<p><code>function httpcopy</code> 意思同上下</p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;function httpcopy&#39;</code></p>
-<p><code>tiangou748</code> 木马密码为tiangou748</p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;tiangou748&#39;</code> 查找文件中包含密码的文件。</p>
-<p><code>error_reporting(0);$sr=</code></p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;$sr=&#39;</code></p>
-<p><code>phpc.sinaapp.com</code></p>
-<p><code>find . -type f -name &#39;*.php&#39;|xargs grep &#39;phpc.sinaapp.com&#39; | awk -F: &#39;{print  $1}&#39; | xargs rm -rf</code></p>
-<p><code>find . -name \* -type f -print | xargs grep &quot;hostname&quot; | awk -F: &#39;{print $1}&#39;  | xargs rm -rf</code></p>
-
-          
+          webshell后门我相信大家都见过，站长也都清理过木马。今天分享一个快速查找的办法：
+木马里面常用的php函数：
+set_time_limit（禁止报错）
+定义和用法
+error_reporting() 函数跪地你给应该报告何种 PHP 错误。
+error_reporting() 函数能够在运行时
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/07/linux快速查找木马后门的办法/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -490,24 +459,21 @@
       
         
           
-            <p>今天需要命令备份一个网站的数据库，下面记录一下命令：</p>
-<p>1.打开到网站根目录</p>
-<p>2.导出数据库</p>
-<p><code>mysqldump -uroot -proot mt_suixin_com &gt; mt_suixin_com.sql</code></p>
-<p>-uroot：数据库用户名</p>
-<p>-proot：数据可密码</p>
-<p>mt_suixin_com：数据库名称</p>
-<p>大于号：导出（导出到当前目录）</p>
-<p>mt_suixin_com.sql：导出是数据库名称</p>
-<p>以上操作完成之后数据库导出成功。</p>
-<p>我们可以使用 <code>ls -lrt</code> 命令以列表形式列出来，方面查看。</p>
-<p><code>history</code> ：查看历史命令</p>
-<p>3.导出完成之后查编辑数据库文件，查看是否有结束标志。如：</p>
-<p><code>/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;</code></p>
-<p><code>/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;</code><br><code>/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;</code><br><code>/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;</code><br><code>/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;</code><br><code>/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;</code><br><code>/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;</code><br><code>/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;</code></p>
-<p><code>-- Dump completed on 2018-09-05  9:48:08</code></p>
-
-          
+          今天需要命令备份一个网站的数据库，下面记录一下命令：
+1.打开到网站根目录
+2.导出数据库
+mysqldump -uroot -proot mt_suixin_com &gt; mt_suixin_com.sql
+-uroot：数据库用户名
+-proot：数据可密码
+mt_suixin_com：数据
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/05/linux命令导出数据库/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -628,11 +594,18 @@
       
         
           
-            <p>感谢书生给的搭建hexo的教程，博客搭建起来了，决定也利用起来，更新一些自己收集的文章什么的。</p>
-<p>今天加一篇文章熟悉一下操作。</p>
-<p>同时觉定就用现在的域名，不让收录。挺好的！</p>
+          感谢书生给的搭建hexo的教程，博客搭建起来了，决定也利用起来，更新一些自己收集的文章什么的。
+今天加一篇文章熟悉一下操作。
+同时觉定就用现在的域名，不让收录。挺好的！
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/04/记录今天的操作/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -753,13 +726,20 @@
       
         
           
-            <p>今天我的博客上线了，使用的新的环境搭建，这个很简洁。</p>
-<p>希望之后可以坚持更新文章吧！</p>
-<p>第一篇文章先写到这里吧！</p>
-<p>2018年9月3日10:52:19</p>
-<p>调试完成时间：2018年9月3日13:42:42</p>
+          今天我的博客上线了，使用的新的环境搭建，这个很简洁。
+希望之后可以坚持更新文章吧！
+第一篇文章先写到这里吧！
+2018年9月3日10:52:19
+调试完成时间：2018年9月3日13:42:42
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/我的博客今天上线啦/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -880,13 +860,15 @@
       
         
           
-            <p>Welcome to [Hexo]! This is your very first post. Check [documentation] for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting] or you can ask me on [GitHub].</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
+          Welcome to [Hexo]! This is your very first post. Check [documentation] for more info. If you get any problems when using Hexo, you can find the answer
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/03/hello-world/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
