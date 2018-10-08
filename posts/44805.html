@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="搜索引擎," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="新增参数（移动端） word=代表手机移动搜索，wd=代表电脑PC搜索 sa=ib（首页） sa=tb（上方搜索输入框） sa=np（内页）  oq=上一次搜索词（之前利用这个刷出下拉） rq=这段时间新增加的参数，参数跟oq调用的也是上一次搜索词 sa=ts_“？”（1代表第一个下拉词，2代表第二个下拉词，3代表第三个下拉词，4代表第四个下拉词，5代表第五个下拉词，例：sa=ts_1 那么就是第">
+<meta name="keywords" content="搜索引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度参数研究">
+<meta property="og:url" content="http://yoursite.com/posts/44805.html">
+<meta property="og:site_name" content="WEB安全博客爱好者-掌舵者">
+<meta property="og:description" content="新增参数（移动端） word=代表手机移动搜索，wd=代表电脑PC搜索 sa=ib（首页） sa=tb（上方搜索输入框） sa=np（内页）  oq=上一次搜索词（之前利用这个刷出下拉） rq=这段时间新增加的参数，参数跟oq调用的也是上一次搜索词 sa=ts_“？”（1代表第一个下拉词，2代表第二个下拉词，3代表第三个下拉词，4代表第四个下拉词，5代表第五个下拉词，例：sa=ts_1 那么就是第">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-08T03:32:46.313Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度参数研究">
+<meta name="twitter:description" content="新增参数（移动端） word=代表手机移动搜索，wd=代表电脑PC搜索 sa=ib（首页） sa=tb（上方搜索输入框） sa=np（内页）  oq=上一次搜索词（之前利用这个刷出下拉） rq=这段时间新增加的参数，参数跟oq调用的也是上一次搜索词 sa=ts_“？”（1代表第一个下拉词，2代表第二个下拉词，3代表第三个下拉词，4代表第四个下拉词，5代表第五个下拉词，例：sa=ts_1 那么就是第">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/posts/44805.html"/>
+
+
+
+
+
+  <title>百度参数研究 | WEB安全博客爱好者-掌舵者</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WEB安全博客爱好者-掌舵者</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">web安全分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-目录">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            目录
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/44805.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZhangDuozhe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WEB安全博客爱好者-掌舵者">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">百度参数研究</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-08T11:27:13+08:00">
+                2018-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>新增参数（移动端）</p>
+<p>word=代表手机移动搜索，wd=代表电脑PC搜索</p>
+<p>sa=ib（首页）</p>
+<p>sa=tb（上方搜索输入框）</p>
+<p>sa=np（内页）</p>
+<hr>
+<p>oq=上一次搜索词（之前利用这个刷出下拉）</p>
+<p>rq=这段时间新增加的参数，参数跟oq调用的也是上一次搜索词</p>
+<p>sa=ts_“？”（1代表第一个下拉词，2代表第二个下拉词，3代表第三个下拉词，4代表第四个下拉词，5代表第五个下拉词，例：sa=ts_1 那么就是第一个下拉词）</p>
+<p>rsv_pq=（搜索验证）</p>
+<p>rsv_t=（搜索验证）</p>
+<p>ssid=（据说是识别路由器，反正是识别网络或者网段之类的东西，只用利用360浏览器进行搜索才有这个参数）</p>
+<p>tn=搜索框来源标识，tn=iphone是代表模拟手机设备苹果模拟器，tn=zbios代表是苹果下面的客户端搜索。</p>
+<p>　　百度搜索URL参数解析</p>
+<p>　　百度的搜索URL存在着一定的规律和逻辑，下面的链接是我使用百度搜索“标点符”后得到的链接，下面就来一起分析下百度搜索结果URL的秘密。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/s?wd=%E6%A0%87%E7%82%B9%E7%AC%A6&amp;rsv_spt=1&amp;issp=1&amp;rsv_bp=0&amp;ie=utf-8&amp;tn=baiduhome_pg&amp;inputT=2969</span><br></pre></td></tr></table></figure>
+<p>　　URL中的s?表示搜索，&amp;符号起到参数分割的作用。上述链接涉及到的参数如下：</p>
+<p>　　wd：Keyword，查询的关键词，有时还会是word，比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.hao123.com</span><br></pre></td></tr></table></figure>
+<p>打开的链接就是word，wd后面的关键词使用gb2312进行编码，如果搜索词中出现空格则使用+号替换；</p>
+<p>　　rsv_spt：识别浏览器，目前测试下来Chrome、FireFox、Safari的为3，IE浏览器为1；</p>
+<p>　　rsv_bp：判断搜索位置：0为从百度首页进入，1为搜索结果顶部搜索，2为搜索结果底部搜索；</p>
+<p>　　ie：InputEncoding，查询关键词的编码，缺省设置为简体中文，即ie=gb2312；</p>
+<p>　　tn：搜索框来源标识，如百度首页的就是baiduhome_ph，hao123站来的sitehao123，遨游浏览器的为tn=myie2dg等。除了百度自身用来数据统计好，词数据还对百度搜索联盟分成起到跟踪作用。tn=baidulocal表示百度站内搜索，返回的结果很干净，无广告干扰；</p>
+<p>　　inputT：搜索响应时间，单位是毫秒；</p>
+<p>　　以上我上面的URL中出现的参数，但是百度的搜索引擎参数远远比上面的还要多。再来看看还有哪些参数：</p>
+<p>　　bs：BeforeSearch，上一次搜索的关键词；百度会记录上一次用户的搜索词是什么；</p>
+<p>　　sr：结合bs使用。一般查询sr=0或者为空值，但sr=1时，查询将结合bs的值一起作为查询的关键字。默认值为0，除0，1外其它值无效。</p>
+<p>　　pn：PageNumber，搜索结果的页码，从零开始计数。即pn=${结果页码-1}*rn；</p>
+<p>　　rn：RecordNumber，搜索结果显示条数，缺省设置rn=10，取值范围:10-100；</p>
+<p>　　cl：Class，搜索类型，cl=3为网页搜索，cl=2为图片搜索；</p>
+<p>　　lm：搜索结果的时间限制。以天为单位，例如搜索最近一个月的网页，lm=30.默认值为0，表示没有时间限制；</p>
+<p>　　ct：语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0；</p>
+<p>　　q5：搜索内容位置限制。0-所有内容；1-网页标题(相当于使用’title:’查询前缀)；2-url(相当于使用’inurl:’查询前缀)；其它值等效于0，默认值为0；</p>
+<p>　　q6：搜索内容网站限制。例如q6=<a href="http://www.biaodianfu.com，表示只搜索http://www.biaodianfu.com/的网页；相当于使用了’site:前缀’，默认值为空" target="_blank" rel="noopener">www.biaodianfu.com，表示只搜索http://www.biaodianfu.com/的网页；相当于使用了’site:前缀’，默认值为空</a></p>
+<p>　　dq：不建议使用该参数。查询内容来原的地区限制。具体值有百度确定，默认值为空。使用这个参数的效果很差；</p>
+<p>　　oq：相关搜索的主词，例如，搜索“标点符”后点击“标点符号”，出现的相关搜索，用来记录来源词“标点符”，或输入搜索词，输入到一半点推荐关键词的那个词，两个通过出现rsp/rsv_bp进行区分；</p>
+<p>　　rsp：相关搜索词的位置，第一个推荐词为0，第二个为1，以此类推；</p>
+<p>　　usm：在百度搜索任何词从任何一页点到第三页以后的，都会随机出现usm的参数。当usm=0的时候是正常排名。当usm=1的时候所有排名后移一位，当usm=2的时候排名后移两位，以此类推。而词参数影响排名的效果只对第三页以及第三页以后的有效，也就是说前20名的排名不受词因素影响。此参数具体作用未知；</p>
+<p>　　f：搜索判断，f=8用户自主搜索，f=3下拉框推荐，f=1相关搜索；</p>
+<p>　　rsv_ers：出现的值为rsv_ers=xn0或rsv_ers=xn1，目前还不知道具体的作用。</p>
+<p>　　rs_src：目前看到的都是rs_src=0，此参数与rsv_ers同时出现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/s?wd=关键字</span><br></pre></td></tr></table></figure>
+<p>　　wd(Keyword)：查询的关键词；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/s?wd=关键字&amp;cl=3</span><br></pre></td></tr></table></figure>
+<p>　　cl(Class)：搜索类型，cl=3为网页搜索，cl=2为图片搜索；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://video.baidu.com/v?rn=20&amp;pn=0</span><br></pre></td></tr></table></figure>
+<p>　　pn(PageNumber)：显示结果的页数；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/s?ie=gb2312</span><br></pre></td></tr></table></figure>
+<p>　　ie(InputEncoding)：查询关键词的编码，缺省设置为简体中文，即ie=gb2312；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://image.baidu.com/i?ct=503316480&amp;si=zbjingshui.com</span><br></pre></td></tr></table></figure>
+<p>　　ct–此值一般是一串数字，可能是搜索请求的验证码；</p>
+<p>　　si–在限定的域名中搜索,比如想在本站内搜索可使用参数si=shangzhiwang.com,要使这个参数有效必须结合ct参数一起使用；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　http://video.baidu.com/v?rn=20&amp;pn=0</span><br></pre></td></tr></table></figure>
+<p>　　rn(RecordNumber)：搜索结果显示条数，缺省设置rn=10，取值范围:10-100；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/s?bs=商智网络</span><br></pre></td></tr></table></figure>
+<p>　　bs(BeforeSearch)：上一次搜索的关键词；</p>
+<p>　　tn：提交搜索请求的来源站点，这是百度与免费软件合作时的利益来源，举例来说我们使用的一些免费浏览器中所提供的百度搜索时，URL地址中都带有tn=内容，tn=后面的内容就是百度联盟的账号。如：Firefox的tn=suvion_dg(tn=suvion_4_dg),傲游的tn=myie2dg，TheWorld的tn=suvion_4_pg，只要你使用了这些带有tn=的搜索，只要点击了其中的广告，提供该软件的浏览器就会从中赚取利益。搜索结果有个例外，当tn=baidulocal时，你可以得到一个无竞价无广告的百度搜索结果.</p>
+<p>　　收集补充：</p>
+<p>　　百度参数分析—-搜索时URL参数含义</p>
+<p>　　<a href="http://www.baidu.com/s?lm=0(搜索结果时间限制)&amp;si=&amp;rn=10(每页显示的数目)&amp;ie=gb2312&amp;（语言）ct=0&amp;wd=%CA%6%BB%FA&amp;（关键词）pn=10（在第pn比上10后加上1页）&amp;ver=0&amp;cl=3&amp;uim=6&amp;usm=0" target="_blank" rel="noopener">http://www.baidu.com/s?lm=0(搜索结果时间限制)&amp;si=&amp;rn=10(每页显示的数目)&amp;ie=gb2312&amp;（语言）ct=0&amp;wd=%CA%6%BB%FA&amp;（关键词）pn=10（在第pn比上10后加上1页）&amp;ver=0&amp;cl=3&amp;uim=6&amp;usm=0</a></p>
+<p>　　tn搜索框所属网站。比如tn=sitehao123,就是<a href="http://www.hao123.com/左上那个搜索框" target="_blank" rel="noopener">http://www.hao123.com/左上那个搜索框</a></p>
+<p>　　ieInputEncoding-输入编码。百度似乎不支持其它编码。默认值是“gb2312”</p>
+<p>　　word搜索的关键词。</p>
+<p>　　kw搜索的关键词。</p>
+<p>　　bsBeforeSearch-上一次搜索输入的关键词.</p>
+<p>　　sr不建议使用该参数.结合bs使用。一般查询sr=0或者为空值，但sr=1时，查询将结合bs的值一起作为查询的关键字.默认值为0，除0，1外其它值无效。</p>
+<p>　　ct语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页；其它不确定或者无效或。默认值为0.</p>
+<p>　　rn每页包含的搜索结果数目。默认值为10</p>
+<p>　　pn搜索结果的页码，从零开始计数。即pn=${结果页码-1}*rn。</p>
+<p>　　lm搜索结果的时间限制。以天为单位，例如搜索最近一个月的网页，lm=30.默认值为0,表示没有时间限制。</p>
+<p>　　q5搜索内容位置限制.0-所有内容;1-网页标题(相当于使用’title:’查询前缀);2-url(相当于使用’inurl:’查询前缀);其它值等效于0.默认值为0</p>
+<p>　　q6搜索内容网站限制.例如q6=sohu.com,表示只搜索sohu.com的网页;相当于使用了’site:前缀’.默认值为空</p>
+<p>　　dq不建议使用该参数.查询内容来原的地区限制.具体值有百度确定.默认值为空.试了一下，使用这个参数的效果很差.</p>
+<p>　　myselectvalue</p>
+<p>　　submit=</p>
+<p>　　tb=on贴吧？</p>
+<p>　　f未知。默认值为空</p>
+<p>　　cl未知。默认值为空</p>
+<p>　　rs2未知。</p>
+<p>　　sc未知。</p>
+<p>　===============================================================================</p>
+<p>　　百度搜索命令参数</p>
+<p>　　构造半自动化搜索引擎查询，需要了解一下，百度url构成方式和参数的作用。虽然是转载，但是还是有很大的学习意义了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/baidu?cl=3&amp;tn=baidutop10&amp;wd=%B6%B9%B0%EA</span><br></pre></td></tr></table></figure>
+<p>　　这是一个从百度风云榜里面截取的url链接了。cl=3表示网页搜索，tn表示来源站点，wd是关键词%B6%B9%B0%EA是utf编码之后的结果了。</p>
+<p>　　百度搜索命令中的参数</p>
+<p>　　必备参数：</p>
+<p>　　wd——查询的关键词(Keyword)</p>
+<p>　　pn——显示结果的页数(PageNumber)</p>
+<p>　　cl——搜索类型(Class)，cl=3为网页搜索</p>
+<p>　　可选参数：</p>
+<p>　　rn——搜索结果显示条数(RecordNumber)，取值范围在10–100条之间，缺省设置rn=10</p>
+<p>　　ie——查询输入文字的编码(InputEncoding)，缺省设置ie=gb2312，即为简体中文</p>
+<p>　　tn——提交搜索请求的来源站点</p>
+<p>　　几个有用的tn</p>
+<p>　　tn=baidulocal表示百度站内搜索，返回的结果很干净，无广告干扰。</p>
+<p>　　比如，在百度站内搜索“快乐”，看看返回结果是不是很清爽。</p>
+<p>　　tn=baiducnnic想把百度放在框架中吗？试试这个参数就可以了，是百度为Cnnic定制的</p>
+<p>　　si——在限定的域名中搜索,比如想在新浪的站内搜索可使用参数si=sina.com.cn，要使这个参数有效必须结合ct参数一起使用。</p>
+<p>　　ct——此参数的值一般是一串数字，估计应该是搜索请求的验证码</p>
+<p>　　si和ct参数结合使用，比如在sina.com.cn中搜索“理想”，可用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/s?q=&amp;ct=2097152&amp;si=sina.com.cn&amp;ie=gb2312&amp;cl=3&amp;wd=理想</span><br></pre></td></tr></table></figure>
+<p>　　bs——上一次搜索的关键词(BeforeSearch)，估计与相关搜索有关</p>
+<p>　　百度搜索网址参数的含义</p>
+<p>　　如果你是一个细心的人在百度搜索的时候你就会发现每次搜索百度搜索网址的参数除了我们搜的关键词其它参数会随之变化.</p>
+<p>　　要成为一名合格的网站优化员(自称SEOer)了解这些参数是必须的.</p>
+<p>　　跟随老修一起来仔细研究一下隐藏在百度搜索网址参数里的这些小秘密吧:</p>
+<p>　　举例说明各个参数的意思:</p>
+<p>　　1.浏览器输入<a href="http://www.baidu.com打开百度首页/输入&quot;老吧&quot;搜索再看百度的附加了参数:(这里我只分析关键的参数)" target="_blank" rel="noopener">www.baidu.com打开百度首页/输入&quot;老吧&quot;搜索再看百度的附加了参数:(这里我只分析关键的参数)</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/#wd=%E8%80%81%E5%90%A7</span><br></pre></td></tr></table></figure>
+<p>　　上面红色的部分就是我刚搜索的关键词”老吧”,只是中文字体经过浏览器的编码变成上面的样子,wd就是百度其中的一个参数(wd=关键字).</p>
+<p>　　2.搜索的结果肯定不止一页,我们点第二页,百度搜索结果网址又多了些参数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/s?wd=%E8%80%81%E5%90%A7&amp;pn=100&amp;rn=100&amp;ie=utf-8&amp;usm=2</span><br></pre></td></tr></table></figure>
+<p>　　rn=100rn参数是指定每页显示100条结果,一般是10的倍数,最大100条/每页;</p>
+<p>　　pn=100pn参数则是当前页码,不过百度进行了运算,如果是第一页pn就等于0,如果是第二页则是(rn=100)*((pn=0)+1)这样显示第二页就刚好是rn=100了.</p>
+<p>　　3.如果我们这时候在当前的百度网页输入框中重新搜索一个词”老修”,看百度搜索结果的网址又加了参数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/s?rn=100&amp;ie=utf-8&amp;bs=%E8%80%81%E5%90%A7&amp;f=8&amp;rsv_bp=1&amp;wd=%E8%80%81%E4%BF%AE&amp;rsv_sug3=6&amp;rsv_sug4=187&amp;rsv_sug1=6&amp;rsv_sug2=0&amp;inputT=2</span><br></pre></td></tr></table></figure>
+<p>　　wd参数是我们当前搜索的”老修”关键词,”bs参数”则是指BeforeSearch-上一次搜索输入的关键词</p>
+<p>　　如果我们再在输入框中再搜别的词,百度url中的参数基本不加了.</p>
+<p>　　4.还有一种情况是当我们输入一个关键词的时候百度会给我们一些下拉词选择,如果选择一个关键词,url参数又不一样了:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　http://www.baidu.com/s?tn=baiduhome_pg&amp;rn=100&amp;ie=utf-8&amp;bs=%E8%80%81%E5%90%A7&amp;f=3&amp;rsv_bp=1&amp;rsv_spt=1&amp;wd=%E8%80%81%E6%B9%BF%E5%90%A7&amp;rsv_sug3=1&amp;rsv_sug4=15&amp;rsv_sug1=1&amp;oq=%E8%80%81%E5%90%A7&amp;rsv_sug2=1&amp;rsp=4&amp;inputT=0&amp;rsv_sug=1</span><br></pre></td></tr></table></figure>
+<p>　　选择下拉的关键词则多了个oq参数,伴随这oq参数同时还有一个关键的的f=3,这两个参数的含义引用网上的解释:</p>
+<p>　　oq参数是指原先查询字符串(originalqueryString)</p>
+<p>　　oq和关键词(wd)参数值有着相同的特征，亦是自行输入搜索词，百度搜索框提示词，相关搜索候选词或者错别字提示正确搜索词等，长度限制在38个汉字以内。</p>
+<p>　　oq参数不仅在相关搜索(f=1)中出现，另外几种搜索形式，如即时搜索提示(f=3)、错别字提示正确搜索(f=12)也会有oq.rsp=4表示是第四个提示词.</p>
+<p>　　百度搜索地址其它参数:</p>
+<p>　　f(form)参数值:1相关搜索;3即时搜索提示;8自主搜索形式;12错别字提示正确搜索</p>
+<p>　　ct此值一般是一串数字，可能是搜索请求的验证码；</p>
+<p>　　si在限定的域名中搜索,比如想在站内搜索可用si=lao8.org,这个参数必须结合ct参数一起使用；类似:site:lao8.org</p>
+<p>　　tn提交搜索请求的来源站点，这是百度与免费软件合作时的利益来源，</p>
+<p>　　ie网页编码比如:gb2312/GBK/UTF-8等</p>
+<p>　　ct语言限制。0-所有语言，1-简体中文网页，2-繁体中文网页等等;</p>
+<p>　　lm搜索结果的时间限制。以天为单位</p>
+<p>　　q5搜索内容位置限制.0-所有内容;1-网页标题(相当于使用’title:’查询前缀);2-url(相当于使用’inurl:’查询前缀);其它值等效于0.默认值为0</p>
+<p>　　q6搜索内容网站限制.例如q6=sohu.com,表示只搜索sohu.com的网页;相当于使用了’site:前缀’.默认值为空</p>
+<p>　　dq查询内容来原的地区限制.</p>
+<p>　　rs_src相关搜索_语义关联性(relatedsearch_src)参数值:0与原先查询字符串语义关联性较高1与原先查询字符串语义关联性较低(当我们搜索的时候点百度底下提示的相关搜索就会有这个参数)</p>
+<p>　　rsv_bp=0表示在百度首页、浏览器的百度搜索栏、导航站等初次在搜索框输入内容进行搜索。</p>
+<p>　　rsv_bp=1表示在百度搜索结果的页眉(header)搜索框中继续搜索</p>
+<p>　　rsv_bp=2表示在百度搜索结果的页脚(footer)搜索框中继续搜索,至少连续搜索过2次以上，才会出现rsv_bp=1或rsv_bp=2。</p>
+<p>　　rsv_sug=0rsv_sug=1rsv_sug=2，分别表示搜索框提示0-2条搜索历史记录。以蓝色字体和其他黑色提示词区分开。</p>
+<p>　　rsv_sug1搜索框提示次数</p>
+<p>　　rsv_sug2搜索框提示词搜索方式:0键盘选择搜索框提示词后，没有更改过提示词的搜索方式,1非键盘(如鼠标、手指等)选择搜索框提示词进行搜索</p>
+<p>　　rsv_sug3和键盘重复速率有关。键盘重复速度或网速越快，rsv_sug3参数值越小，但不小于0；重复速度或网速越慢，rsv_sug3参数值越大，但不超过总输入次数。键盘重复速度越快表明用户大概知道自己要搜的是什么关键词，但不能反过来认为速度越慢就越不清楚自己想要搜索的是什么。</p>
+<p>　　rsv_sug4反馈搜索结果用时</p>
+<p>　　rsv_sug5提示词输入搜索框方式</p>
+<p>　　rsv_n其他输入搜索词方式:1提示词填充到搜索框后做了修改,2粘贴搜索词</p>
+<p>　　rsv_spt首页搜索类型:1新版百度首页搜索(先要登录百度帐号);2百度实时热点搜索(先要登录百度帐号);3传统百度首页搜索</p>
+<p>　　rsv_ers参数是百度统计用户翻页行为的.</p>
+<p>　　inputT输入耗时</p>
+<p>　　另外还有一个参数USM,这个参数通常出现的非第一页搜索结果中,比如搜索一个词打开第二页,修改这个参数的值:分别为1/2/3,就会发现非第一页的搜索排名发生的移动.目前还搞不懂百度用这个词做什么.</p>
+<p>　　这么多的参数我们不可能一下子记住,其实我们记住几个重要的参数就可以了,现在已经有黑帽seo利用这些参数人为的去影响百度结果了,百度作为第一大中文搜索引擎是不希望搜索结果被控制的.所以要适可而止.</p>
+
+      
+    </div>
+    
+    
+    
+<div>
+
+<div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+
+</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/搜索引擎/" rel="tag"><i class="fa fa-tag"></i> 搜索引擎</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/31483.html" rel="next" title="挂链接的代码">
+                <i class="fa fa-chevron-left"></i> 挂链接的代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/50647.html" rel="prev" title="增强site出图技巧">
+                增强site出图技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="ZhangDuozhe" />
+            
+              <p class="site-author-name" itemprop="name">ZhangDuozhe</p>
+              <p class="site-description motion-element" itemprop="description">免费实时分享web安全技术资料。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                高手集合板块
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://scholar10.github.io/" title="书生" target="_blank">书生</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZhangDuozhe</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+-->
+
+<!--
+  <span class="post-meta-divider">|</span>
+-->
+
+<!--
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+-->
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
